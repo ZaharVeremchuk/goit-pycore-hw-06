@@ -1,4 +1,5 @@
 from collections import UserDict
+import re
 
 class Field:
     def __init__(self, value):
@@ -24,7 +25,10 @@ class Record:
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
     
     def add_phone(self, phone: str) -> None:
-        self.phones.append(Phone(phone))
+        if re.match("\d{10}", phone):
+            self.phones.append(Phone(phone))
+        else:
+            print("Phone need to have 10")
 
     def edit_phone(self, old_phone: str, new_phone: str) -> None:
           for phone in self.phones:
